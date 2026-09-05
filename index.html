@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>TÜBİTAK 2209-A | Ziyapaşa Cephe Değerlendirme Sistemi</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Üst Bilgi Barı (Header) -->
+  <header class="app-header">
+    <div class="header-container">
+      <div class="brand">
+        <div class="badge-tubitak">TÜBİTAK 2209-A</div>
+        <div class="brand-text">
+          <h1>Ziyapaşa Mimari Entegrasyon Değerlendirmesi</h1>
+          <p>Yapay Zekâ Destekli Cephe Tasarımlarının Bağlamsal Uyum Anketi</p>
+        </div>
+      </div>
+      <div class="header-stats" id="headerProgressBadge">
+        <span class="step-indicator">Bina: <strong id="currentStepText">1 / 5</strong></span>
+        <div class="progress-mini-bar">
+          <div class="progress-fill" id="progressBarFill" style="width: 20%;"></div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Ana İçerik Alanı -->
+  <main class="main-container">
+
+    <!-- ADIM 0: KATILIMCI BİLGİLENDİRME & DEMOGRAFİ -->
+    <section id="stepIntro" class="survey-card active-card">
+      <div class="card-header">
+        <div class="card-tag">BÖLÜM 1: BİLGİLENDİRME & KATILIMCI PROFİLİ</div>
+        <h2>Araştırma Hakkında & Bilgilendirilmiş Onam</h2>
+        <p class="section-desc">
+          Bu çalışma, <strong>TÜBİTAK 2209-A Üniversite Öğrencileri Araştırma Projeleri</strong> kapsamında yürütülmektedir.
+          Amacımız; Adana Seyhan <strong>Ziyapaşa Mahallesi</strong> geleneksel kentsel dokusu analiz edilerek üretilen yeni mimari cephe tasarımlarının, mahalle kimliğiyle ve sokak ritmiyle ne derece örtüştüğünü mimarlık uzmanları ve mahalle sakinlerinin bakış açısıyla ölçmektir.
+        </p>
+      </div>
+
+      <div class="form-grid">
+        <div class="form-group full-width">
+          <label for="fullName">Ad Soyad (İsteğe Bağlı / Rumuz):</label>
+          <input type="text" id="fullName" placeholder="Örn: Mimar A. Y. veya Katılımcı 01">
+        </div>
+
+        <div class="form-group">
+          <label for="targetGroup">Katılımcı Grubu: <span class="req">*</span></label>
+          <select id="targetGroup" required>
+            <option value="">Lütfen Seçiniz...</option>
+            <option value="Mimar / Tasarımcı">Mimar / İç Mimar</option>
+            <option value="Şehir Plancısı">Şehir Bölge Plancısı</option>
+            <option value="Akademisyen">Akademisyen / Araştırmacı</option>
+            <option value="Ziyapaşa Sakini">Ziyapaşa Mahallesi Sakini (Bölgede Yaşayan)</option>
+            <option value="Ziyapaşa Esnafı / Kullanıcısı">Ziyapaşa Esnafı / Düzenli Ziyaretçi</option>
+            <option value="Öğrenci">Mimarlık / Şehir Planlama Öğrencisi</option>
+            <option value="Diğer">Diğer</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="experienceAge">Yaş Grubu: <span class="req">*</span></label>
+          <select id="experienceAge" required>
+            <option value="">Seçiniz...</option>
+            <option value="18-25">18 - 25 yaş</option>
+            <option value="26-35">26 - 35 yaş</option>
+            <option value="36-50">36 - 50 yaş</option>
+            <option value="51+">51 yaş ve üzeri</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="ziyapasaRelation">Ziyapaşa ile İlişkiniz / Tanışıklık Süreniz:</label>
+          <select id="ziyapasaRelation">
+            <option value="10 Yıldan Fazladır Yaşıyorum">10 Yıldan Fazladır Burada Yaşıyorum</option>
+            <option value="3-10 Yıldır Yaşıyorum / Çalışıyorum">3-10 Yıldır Yaşıyorum / Çalışıyorum</option>
+            <option value="Sık Sık Ziyaret Ederim">Sık Sık Gelirim / Bölgeyi Çok İyi Bilirim</option>
+            <option value="Mimari Açıdan İnceliyorum">Mesleki / Akademik Olarak Biliyorum</option>
+            <option value="İlk Defa İnceliyorum">Bölgeyi İlk Defa Bu Çalışmayla Görüyorum</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="gender">Cinsiyet (İsteğe Bağlı):</label>
+          <select id="gender">
+            <option value="Belirtmek İstemiyor">Belirtmek İstemiyorum</option>
+            <option value="Kadın">Kadın</option>
+            <option value="Erkek">Erkek</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="consent-box">
+        <label class="checkbox-container">
+          <input type="checkbox" id="consentCheck" checked>
+          <span class="checkmark"></span>
+          <span class="consent-text">Görselleri inceleyeceğimi, verdiğim puanların akademik ve istatistiksel analizlerde bilimsel amaçla kullanılmasını onaylıyorum.</span>
+        </label>
+      </div>
+
+      <div class="action-bar-single">
+        <button type="button" class="btn-primary" id="btnStartSurvey">
+          <span>Değerlendirmeye Başla (5 Binayı İncele)</span>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </button>
+      </div>
+    </section>
+
+    <!-- ADIM 1 - 5: BİNA DEĞERLENDİRME ŞABLONU (Dinamik Render Edilecek) -->
+    <section id="stepEvaluation" class="survey-card" style="display: none;">
+      
+      <!-- Üst Bina Başlık & Künye -->
+      <div class="building-identity-bar">
+        <div class="b-meta">
+          <span class="badge-accent" id="binaBadge">BİNA 01 / 05</span>
+          <h2 id="binaTitle">Tasarım 01 (Ada 12, Parsel 08)</h2>
+          <p id="binaDesc">Revit BIM Modeli ve Ziyapaşa sokak dokusuna entegrasyonu</p>
+        </div>
+        <div class="quick-nav-dots" id="quickNavDots">
+          <!-- JS tarafından 5 nokta üretilecek -->
+        </div>
+      </div>
+
+      <!-- Karşılaştırma Sekmeleri / Görsel Seçici -->
+      <div class="media-tabs-wrapper">
+        <div class="media-tabs-label">Görsel Karşılaştırma Aşamaları:</div>
+        <div class="media-tabs" id="mediaTabs">
+          <button class="tab-btn active" data-view="integ">1. Sokak Entegrasyonu (Nihai)</button>
+          <button class="tab-btn" data-view="split">↔ Yan Yana (Ham vs Entegre)</button>
+          <button class="tab-btn" data-view="ref">2. Orijinal Ziyapaşa Sokağı</button>
+          <button class="tab-btn" data-view="model">3. Ham 3B Mimari Model</button>
+          <button class="tab-btn" data-view="ai">4. YZ Tasarım Konsepti</button>
+          <button class="tab-btn" data-view="v1">5. Renk V1 (Adaçayı Yeşili)</button>
+          <button class="tab-btn" data-view="v2">6. Renk V2 (Terrakotta)</button>
+        </div>
+      </div>
+
+      <!-- Görsel Görüntüleme Sahnesi -->
+      <div class="viewer-stage" id="viewerStage">
+        
+        <!-- Tekli Görünüm Modu -->
+        <div class="single-image-view" id="singleImageView">
+          <div class="image-wrapper">
+            <img id="mainViewerImg" src="" alt="Mimari Görsel" loading="lazy">
+            <div class="image-caption-overlay" id="imageCaption">Nihai Sokak Entegrasyonu</div>
+            <button class="btn-fullscreen" id="btnZoomModal" title="Görseli Büyüt">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Yan Yana Karşılaştırma Modu -->
+        <div class="split-image-view" id="splitImageView" style="display: none;">
+          <div class="split-col">
+            <div class="split-tag">MEVCUT ZİYAPAŞA SOKAK DOKUSU (HAM DURUM)</div>
+            <div class="split-img-box">
+              <img id="splitImgBefore" src="" alt="Orijinal Sokak" loading="lazy">
+            </div>
+          </div>
+          <div class="split-col">
+            <div class="split-tag highlight">ÖNERİLEN ENTEGRE 3B CEPHE TASARIMI</div>
+            <div class="split-img-box">
+              <img id="splitImgAfter" src="" alt="Entegre Tasarım" loading="lazy">
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- 4 Boyutlu 5'li Likert Puanlama Matrisi -->
+      <div class="likert-scoring-panel">
+        <div class="scoring-header">
+          <h3>Bu Binayı Ziyapaşa Dokusu Açısından Değerlendiriniz:</h3>
+          <span class="scoring-hint">(1: Kesinlikle Yetersiz / Katılmıyorum — 5: Mükemmel / Kesinlikle Katılıyorum)</span>
+        </div>
+
+        <div class="criteria-list">
+          
+          <!-- Kriter 1 -->
+          <div class="criterion-item" data-c="c1">
+            <div class="criterion-info">
+              <span class="c-code">K1</span>
+              <div>
+                <strong class="c-title">Bağlamsal & Tarihi Doku Uyumu</strong>
+                <p class="c-desc">Yeni tasarım, Ziyapaşa Mahallesi'nin genel sokak kimliği ve siluetiyle uyum sağlıyor mu?</p>
+              </div>
+            </div>
+            <div class="likert-buttons" data-metric="c1_baglam">
+              <label class="likert-btn"><input type="radio" name="b_c1" value="1"><span>1<br><small>Hiç</small></span></label>
+              <label class="likert-btn"><input type="radio" name="b_c1" value="2"><span>2<br><small>Az</small></span></label>
+              <label class="likert-btn"><input type="radio" name="b_c1" value="3"><span>3<br><small>Orta</small></span></label>
+              <label class="likert-btn"><input type="radio" name="b_c1" value="4"><span>4<br><small>İyi</small></span></label>
+              <label class="likert-btn"><input type="radio" name="b_c1" value="5"><span>5<br><small>Tam</small></span></label>
+            </div>
+          </div>
+
+          <!-- Kriter 2 -->
+          <div class="criterion-item" data-c="c2">
+            <div class="criterion-info">
+              <span class="c-code">K2</span>
+              <div>
+                <strong class="c-title">Estetik & Görsel Kalite</strong>
+                <p class="c-desc">Cephenin malzeme hissi, detay kalitesi ve görsel çekiciliği ne derece başarılı?</p>
+              </div>
+            </div>
+            <div class="likert-buttons" data-metric="c2_estetik">
+              <label class="likert-btn"><input type="radio" name="b_c2" value="1"><span>1<br><small>Hiç</small></span></label>
+              <label class="likert-btn"><input type="radio" name="b_c2" value="2"><span>2<br><small>Az</small></span></label>
+              <label class="likert-btn"><input type="radio" name="b_c2" value="3"><span>3<br><small>Orta</small></span></label>
+              <label class="likert-btn"><input type="radio" name="b_c2" value="4"><span>4<br><small>İyi</small></span></label>
+              <label class="likert-btn"><input type="radio" name="b_c2" value="5"><span>5<br><small>Tam</small></span></label>
+            </div>
+          </div>
+
+          <!-- Kriter 3 -->
+          <div class="criterion-item" data-c="c3">
+            <div class="criterion-info">
+              <span class="c-code">K3</span>
+              <div>
+                <strong class="c-title">Gelenek-Modernleşme Dengesi</strong>
+                <p class="c-desc">Tasarım, geçmişin izlerini silmeden çağdaş ve yaşanabilir bir cephe dili kurabilmiş mi?</p>
+              </div>
+            </div>
+            <div class="likert-buttons" data-metric="c3_modern">
+              <label class="likert-btn"><input type="radio" name="b_c3" value="1"><span>1<br><small>Hiç</small></span></label>
+              <label class="likert-btn"><input type="radio" name="b_c3" value="2"><span>2<br><small>Az</small></span></label>
+              <label class="likert-btn"><input type="radio" name="b_c3" value="3"><span>3<br><small>Orta</small></span></label>
+              <label class="likert-btn"><input type="radio" name="b_c3" value="4"><span>4<br><small>İyi</small></span></label>
+              <label class="likert-btn"><input type="radio" name="b_c3" value="5"><span>5<br><small>Tam</small></span></label>
+            </div>
+          </div>
+
+          <!-- Kriter 4 -->
+          <div class="criterion-item" data-c="c4">
+            <div class="criterion-info">
+              <span class="c-code">K4</span>
+              <div>
+                <strong class="c-title">Pencere Oranları & Doluluk-Boşluk Ritmi</strong>
+                <p class="c-desc">Pencere düşey oranları ve masif duvar dengesi mahallenin ritmiyle örtüşüyor mu?</p>
+              </div>
+            </div>
+            <div class="likert-buttons" data-metric="c4_ritim">
+              <label class="likert-btn"><input type="radio" name="b_c4" value="1"><span>1<br><small>Hiç</small></span></label>
+              <label class="likert-btn"><input type="radio" name="b_c4" value="2"><span>2<br><small>Az</small></span></label>
+              <label class="likert-btn"><input type="radio" name="b_c4" value="3"><span>3<br><small>Orta</small></span></label>
+              <label class="likert-btn"><input type="radio" name="b_c4" value="4"><span>4<br><small>İyi</small></span></label>
+              <label class="likert-btn"><input type="radio" name="b_c4" value="5"><span>5<br><small>Tam</small></span></label>
+            </div>
+          </div>
+
+          <!-- İsteğe Bağlı Nitel Yorum -->
+          <div class="criterion-item optional-comment">
+            <div class="criterion-info">
+              <span class="c-code note-badge">NOT</span>
+              <div>
+                <strong class="c-title">Varsa Özel Eleştiri / Nitel Yorumunuz (İsteğe Bağlı):</strong>
+                <p class="c-desc">Malzeme, renk, yükseklik veya detay hakkında eklemek istediğiniz düşünceniz:</p>
+              </div>
+            </div>
+            <div class="comment-input-box">
+              <input type="text" id="binaCommentInput" placeholder="Örn: Ahşap güneş kırıcılar dokuya çok yakışmış...">
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- İleri / Geri Navigasyon Barı -->
+      <div class="navigation-bar">
+        <button type="button" class="btn-secondary" id="btnPrevBuilding">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"></polyline></svg>
+          <span>Önceki Bina</span>
+        </button>
+
+        <button type="button" class="btn-primary" id="btnNextBuilding">
+          <span id="btnNextText">Sonraki Binaya Geç (2/5)</span>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </button>
+      </div>
+
+    </section>
+
+    <!-- ADIM 6: TAMAMLAMA, ÖZET VE VERİ İNDİRME / GÖNDERME EKRANI -->
+    <section id="stepFinish" class="survey-card" style="display: none;">
+      <div class="success-banner">
+        <div class="success-icon">✓</div>
+        <h2>Değerlendirmeniz Başarıyla Tamamlandı!</h2>
+        <p>Ziyapaşa Mahallesi mimari kimliğinin korunması ve akademik araştırmamıza sunduğunuz değerli katkı için içtenlikle teşekkür ederiz.</p>
+      </div>
+
+      <div class="results-summary-card">
+        <h3>Özet Değerlendirme Puanlarınız</h3>
+        <div class="score-summary-grid" id="summaryGrid">
+          <!-- JS dolduracak -->
+        </div>
+      </div>
+
+      <div class="submission-actions">
+        <div class="action-card highlight-action">
+          <h4>📊 Saha Görevlisi / Araştırmacı İçin</h4>
+          <p>Toplanan puanları anında yerel veritabanına işleyin veya Excel/CSV olarak bilgisayarınıza indirin:</p>
+          <div class="btn-group">
+            <button class="btn-success" id="btnDownloadCSV">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+              <span>Bu Anketin Verisini İndir (.CSV)</span>
+            </button>
+            <button class="btn-secondary" id="btnDownloadAllStorage">
+              <span>Toplu Tüm Anketleri İndir (N Adet)</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="action-card highlight-action">
+          <h4>💬 Yanıtları WhatsApp ile Yürütücüye Gönder</h4>
+          <p>Doldurulan puanları tek bir dokunuşla doğrudan yürütücünün WhatsApp hattına mesaj olarak iletin:</p>
+          <div class="direct-wa-box" style="margin-bottom: 12px;">
+            <label style="font-size: 11px; color: var(--text-dim); display: block; margin-bottom: 4px;">Yürütücü Telefon Numarası (Başında 90 ile):</label>
+            <input type="text" id="targetPhoneInput" value="905" placeholder="Örn: 905XXXXXXXXX" style="width:100%; padding:8px 10px; background:rgba(0,0,0,0.5); border:1px solid rgba(255,255,255,0.15); border-radius:6px; color:#fff; font-size:13px;">
+          </div>
+          <a href="#" id="btnShareWhatsApp" target="_blank" class="btn-whatsapp" style="width:100%;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91C2.13 13.66 2.59 15.36 3.45 16.86L2.05 22L7.3 20.62C8.75 21.41 10.38 21.83 12.04 21.83C17.5 21.83 21.95 17.38 21.95 11.92C21.95 9.27 20.92 6.78 19.05 4.91C17.18 3.03 14.69 2 12.04 2M12.05 3.67C14.25 3.67 16.31 4.53 17.87 6.09C19.42 7.65 20.28 9.72 20.28 11.92C20.28 16.46 16.58 20.15 12.04 20.15C10.56 20.15 9.11 19.76 7.85 19L7.55 18.83L4.43 19.65L5.26 16.61L5.06 16.29C4.24 14.99 3.8 13.47 3.8 11.91C3.81 7.37 7.5 3.67 12.05 3.67Z"/></svg>
+            <span>WhatsApp ile Mesaj Gönder</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="restart-box">
+        <button class="btn-outline" id="btnNewSurvey">Yeni Katılımcı İçin Sıfırla</button>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Tam Ekran Görsel İnceleme Modal'ı -->
+  <div class="modal-overlay" id="imageModal" style="display: none;">
+    <div class="modal-content">
+      <button class="modal-close" id="btnCloseModal">&times;</button>
+      <img id="modalImg" src="" alt="Tam Boyut">
+      <div class="modal-caption" id="modalCaption">Görsel Başlığı</div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
