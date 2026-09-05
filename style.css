@@ -481,6 +481,54 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  touch-action: pan-y pinch-zoom;
+  user-select: none;
+}
+
+/* Sahne Sağ/Sol Geçiş Okları */
+.stage-nav-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 15;
+  background: rgba(15, 23, 42, 0.75);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  font-size: 28px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: var(--transition);
+  opacity: 0.8;
+}
+
+.stage-nav-arrow:hover {
+  background: var(--primary-light);
+  opacity: 1;
+  transform: translateY(-50%) scale(1.08);
+}
+
+.stage-prev {
+  left: 10px;
+}
+
+.stage-next {
+  right: 10px;
+}
+
+@media (max-width: 768px) {
+  .stage-nav-arrow {
+    width: 36px;
+    height: 36px;
+    font-size: 22px;
+    opacity: 0.9;
+  }
 }
 
 .single-image-view {

@@ -82,9 +82,12 @@ const BUILDINGS_DATA = [
   }
 ];
 
+// Sıralı Görsel Aşamaları Listesi (Kullanıcı İsteğine Göre)
+const VIEW_SEQUENCE = ['ref', 'ai', 'model', 'integ', 'split', 'v1', 'v2'];
+
 // Anket Durumu (State)
 let currentBuildingIndex = 0; // 0..4
-let currentViewMode = 'integ'; // integ, split, ref, model, ai, v1, v2
+let currentViewMode = 'ref'; // 1. Orijinal sokaktan başlar: ref, ai, model, integ, split, v1, v2
 let surveyRespondent = {
   timestamp: '',
   fullName: '',
@@ -115,6 +118,10 @@ const binaDesc = document.getElementById('binaDesc');
 const quickNavDots = document.getElementById('quickNavDots');
 
 const mediaTabs = document.getElementById('mediaTabs');
+const viewerStage = document.getElementById('viewerStage');
+const btnStagePrev = document.getElementById('btnStagePrev');
+const btnStageNext = document.getElementById('btnStageNext');
+
 const singleImageView = document.getElementById('singleImageView');
 const splitImageView = document.getElementById('splitImageView');
 const mainViewerImg = document.getElementById('mainViewerImg');
@@ -202,15 +209,52 @@ function setupEventListeners() {
   mediaTabs.addEventListener('click', (e) => {
     const btn = e.target.closest('.tab-btn');
     if (!btn) return;
-
-    mediaTabs.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-
-    currentViewMode = btn.getAttribute('data-view');
-    renderViewerStage();
+    setStageView(btn.getAttribute('data-view'));
   });
 
-  // İleri / Geri Butonları
+  // Sahne İçi Sağ/Sol Oklar
+  if (btnStagePrev) {
+    btnStagePrev.addEventListener('click', () => navigateStageView(-1));
+  }
+  if (btnStageNext) {
+    btnStageNext.addEventListener('click', () => navigateStageView(1));
+  }
+
+  // MOBİLDE PARMAKLA SAĞA-SOLA KAYDIRMA (TOUCH SWIPE)
+  let touchStartX = 0;
+  let touchStartY = 0;
+  let touchEndX = 0;
+  let touchEndY = 0;
+
+  if (viewerStage) {
+    viewerStage.addEventListener('touchstart', (e) => {
+      touchStartX = e.changedTouches[0].screenX;
+      touchStartY = e.changedTouches[0].screenY;
+    }, { passive: true });
+
+    viewerStage.addEventListener('touchend', (e) => {
+      touchEndX = e.changedTouches[0].screenX;
+      touchEndY = e.changedTouches[0].screenY;
+      handleSwipeGesture();
+    }, { passive: true });
+  }
+
+  function handleSwipeGesture() {
+    const deltaX = touchEndX - touchStartX;
+    const deltaY = touchEndY - touchStartY;
+    // Yatay kaydırma dikey kaydırmadan belirgin şekilde fazlaysa ve min 40px ise
+    if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 40) {
+      if (deltaX < 0) {
+        // Parmağı sola çekti -> Sonraki görsele geç
+        navigateStageView(1);
+      } else {
+        // Parmağı sağa çekti -> Önceki görsele geç
+        navigateStageView(-1);
+      }
+    }
+  }
+
+  // İleri / Geri Bina Butonları
   btnPrevBuilding.addEventListener('click', () => {
     saveCurrentBuildingRatings();
     if (currentBuildingIndex > 0) {
@@ -293,14 +337,32 @@ function loadBuilding(index) {
     }
   });
 
-  // Görsel modunu sıfırla veya entegreye getir
-  currentViewMode = 'integ';
-  mediaTabs.querySelectorAll('.tab-btn').forEach(btn => {
-    btn.classList.toggle('active', btn.getAttribute('data-view') === 'integ');
-  });
-
-  renderViewerStage();
+  // Görsel modunu 1. Orijinal sokaktan başlat
+  setStageView('ref');
   restoreBuildingRatings(b.id);
+}
+
+// Görsel Aşamaları Arasında Adım Adım Gezinme (-1 veya +1)
+function navigateStageView(direction) {
+  let currIdx = VIEW_SEQUENCE.indexOf(currentViewMode);
+  if (currIdx === -1) currIdx = 0;
+  let nextIdx = currIdx + direction;
+  
+  if (nextIdx < 0) {
+    nextIdx = VIEW_SEQUENCE.length - 1; // Başa dön (döngüsel)
+  } else if (nextIdx >= VIEW_SEQUENCE.length) {
+    nextIdx = 0; // Sona gelince başa sar
+  }
+  
+  setStageView(VIEW_SEQUENCE[nextIdx]);
+}
+
+function setStageView(viewMode) {
+  currentViewMode = viewMode;
+  mediaTabs.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.getAttribute('data-view') === viewMode);
+  });
+  renderViewerStage();
 }
 
 // Görsel Sahnesini Çizme
@@ -317,7 +379,7 @@ function renderViewerStage() {
     splitImageView.style.display = 'none';
     singleImageView.style.display = 'block';
 
-    const item = b.images[currentViewMode] || b.images.integ;
+    const item = b.images[currentViewMode] || b.images.ref;
     mainViewerImg.src = item.src;
     imageCaption.textContent = item.label;
   }

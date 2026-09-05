@@ -129,20 +129,23 @@
 
       <!-- Karşılaştırma Sekmeleri / Görsel Seçici -->
       <div class="media-tabs-wrapper">
-        <div class="media-tabs-label">Görsel Karşılaştırma Aşamaları:</div>
+        <div class="media-tabs-label">Görsel Karşılaştırma Aşamaları: <span style="font-size:10px; color:var(--accent-light); font-weight:400;">(Mobilde parmağınızla resmi sağa-sola kaydırabilirsiniz)</span></div>
         <div class="media-tabs" id="mediaTabs">
-          <button class="tab-btn active" data-view="integ">1. Sokak Entegrasyonu (Nihai)</button>
-          <button class="tab-btn" data-view="split">↔ Yan Yana (Ham vs Entegre)</button>
-          <button class="tab-btn" data-view="ref">2. Orijinal Ziyapaşa Sokağı</button>
+          <button class="tab-btn active" data-view="ref">1. Orijinal Ziyapaşa Sokağı</button>
+          <button class="tab-btn" data-view="ai">2. YZ Tasarım Konsepti</button>
           <button class="tab-btn" data-view="model">3. Ham 3B Mimari Model</button>
-          <button class="tab-btn" data-view="ai">4. YZ Tasarım Konsepti</button>
-          <button class="tab-btn" data-view="v1">5. Renk V1 (Adaçayı Yeşili)</button>
-          <button class="tab-btn" data-view="v2">6. Renk V2 (Terrakotta)</button>
+          <button class="tab-btn" data-view="integ">4. Sokak Entegrasyonu (Nihai)</button>
+          <button class="tab-btn" data-view="split">↔ 5. Yan Yana (Ham vs Entegre)</button>
+          <button class="tab-btn" data-view="v1">6. Renk V1 (Adaçayı Yeşili)</button>
+          <button class="tab-btn" data-view="v2">7. Renk V2 (Terrakotta)</button>
         </div>
       </div>
 
       <!-- Görsel Görüntüleme Sahnesi -->
       <div class="viewer-stage" id="viewerStage">
+        <!-- Dokunmatik / Butonlu Hızlı Geçiş Okları -->
+        <button class="stage-nav-arrow stage-prev" id="btnStagePrev" title="Önceki Görsel">‹</button>
+        <button class="stage-nav-arrow stage-next" id="btnStageNext" title="Sonraki Görsel">›</button>
         
         <!-- Tekli Görünüm Modu -->
         <div class="single-image-view" id="singleImageView">
