@@ -3,7 +3,9 @@
  * Saha Uygulaması ve İnteraktif Değerlendirme Motoru
  */
 
-// Google E-Tablolar Canlı Veritabanı Webhook URL
+// Google E-Tablolar Canlı Veritabanı Webhook URL (Aktif Dağıtım)
+const DEFAULT_GOOGLE_SHEETS_WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbxTD-fmevONeTx9lrAbSnkOBr0cgUQcPHZ7ygazLMYMqlmKVHIJ-xC1nxVPjVs9xnqV/exec";
+
 // 1. URL parametresinden (?webhook=...)
 // 2. localStorage'dan
 // 3. Varsayılan tanımlı URL'den okunur
@@ -14,7 +16,7 @@ if (_urlParams.has('webhook')) {
   } catch (e) {}
 }
 
-let GOOGLE_SHEETS_WEBHOOK_URL = localStorage.getItem('tubitak_google_sheets_webhook_url') || "";
+let GOOGLE_SHEETS_WEBHOOK_URL = localStorage.getItem('tubitak_google_sheets_webhook_url') || DEFAULT_GOOGLE_SHEETS_WEBHOOK_URL;
 
 // 5 Binanın Veri Kümesi ve Görsel Yolları
 const BUILDINGS_DATA = [
