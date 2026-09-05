@@ -9,12 +9,12 @@ const BUILDINGS_DATA = [
     id: "bina01",
     index: 1,
     title: "Bina 01 (Tasarım 01 / Ada 12 Parsel 08 - F088)",
-    badge: "BİNA 01 / 05 (BIM - REVIT)",
-    desc: "Orijinal 2 katlı taş/tuğla doku referans alınarak üretilen Revit BIM modeli ve Ziyapaşa sokak entegrasyonu.",
+    badge: "BİNA 01 / 05 (SKETCHUP)",
+    desc: "Orijinal 2 katlı taş/tuğla doku referans alınarak üretilen SketchUp 3B modeli ve Ziyapaşa sokak entegrasyonu.",
     images: {
       integ: { src: "assets/images/bina01_04_ana_entegrasyon.jpg", label: "Nihai Sokak Entegrasyonu (Fotomontaj)" },
       ref: { src: "assets/images/bina01_01_ref_sokak.jpg", label: "Orijinal Ziyapaşa Sokağı (Mevcut Doku - F088)" },
-      model: { src: "assets/images/bina01_02_ham_model.jpg", label: "Autodesk Revit BIM Ham 3B Cephe Modeli" },
+      model: { src: "assets/images/bina01_02_ham_model.jpg", label: "Trimble SketchUp Ham 3B Cephe Modeli" },
       ai: { src: "assets/images/bina01_03_yz_konsept.jpg", label: "Yapay Zekâ Cephe Konsepti (M1 / PR-006)" },
       v1: { src: "assets/images/bina01_05_v1_sagegreen.jpg", label: "2026 Trend Paleti V1: Adaçayı Yeşili Entegrasyonu" },
       v2: { src: "assets/images/bina01_06_v2_terracotta.jpg", label: "2026 Trend Paleti V2: Terrakotta Entegrasyonu" }
@@ -24,12 +24,12 @@ const BUILDINGS_DATA = [
     id: "bina02",
     index: 2,
     title: "Bina 02 (Tasarım 02 / Ada 15 Parsel 11 - F012)",
-    badge: "BİNA 02 / 05 (SKETCHUP)",
-    desc: "Ziyapaşa konut dokusuna uygun düşey pencere ritimli SketchUp mimari modeli ve fotomontajı.",
+    badge: "BİNA 02 / 05 (BIM - REVIT)",
+    desc: "Ziyapaşa konut dokusuna uygun düşey pencere ritimli Autodesk Revit BIM mimari modeli ve fotomontajı.",
     images: {
       integ: { src: "assets/images/bina02_04_ana_entegrasyon.jpg", label: "Nihai Sokak Entegrasyonu (Fotomontaj)" },
       ref: { src: "assets/images/bina02_01_ref_sokak.jpg", label: "Orijinal Ziyapaşa Sokağı (Mevcut Doku - F012)" },
-      model: { src: "assets/images/bina02_02_ham_model.jpg", label: "Trimble SketchUp Ham 3B Cephe Modeli" },
+      model: { src: "assets/images/bina02_02_ham_model.jpg", label: "Autodesk Revit BIM Ham 3B Cephe Modeli" },
       ai: { src: "assets/images/bina02_03_yz_konsept.jpg", label: "Yapay Zekâ Cephe Konsepti (M2 / PR-015)" },
       v1: { src: "assets/images/bina02_05_v1_sagegreen.jpg", label: "2026 Trend Paleti V1: Adaçayı Yeşili Entegrasyonu" },
       v2: { src: "assets/images/bina02_06_v2_terracotta.jpg", label: "2026 Trend Paleti V2: Terrakotta Entegrasyonu" }
