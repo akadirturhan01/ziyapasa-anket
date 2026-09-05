@@ -298,6 +298,11 @@
         <p>Ziyapaşa Mahallesi mimari kimliğinin korunması ve akademik araştırmamıza sunduğunuz değerli katkı için içtenlikle teşekkür ederiz.</p>
       </div>
 
+      <div id="cloudSyncStatus" class="cloud-sync-banner" style="display: none;">
+        <span class="sync-icon">⏳</span> 
+        <span id="cloudSyncText">Verileriniz merkezi Google E-Tablolara kaydediliyor...</span>
+      </div>
+
       <div class="results-summary-card">
         <h3>Özet Değerlendirme Puanlarınız</h3>
         <div class="score-summary-grid" id="summaryGrid">
@@ -331,6 +336,20 @@
             <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91C2.13 13.66 2.59 15.36 3.45 16.86L2.05 22L7.3 20.62C8.75 21.41 10.38 21.83 12.04 21.83C17.5 21.83 21.95 17.38 21.95 11.92C21.95 9.27 20.92 6.78 19.05 4.91C17.18 3.03 14.69 2 12.04 2M12.05 3.67C14.25 3.67 16.31 4.53 17.87 6.09C19.42 7.65 20.28 9.72 20.28 11.92C20.28 16.46 16.58 20.15 12.04 20.15C10.56 20.15 9.11 19.76 7.85 19L7.55 18.83L4.43 19.65L5.26 16.61L5.06 16.29C4.24 14.99 3.8 13.47 3.8 11.91C3.81 7.37 7.5 3.67 12.05 3.67Z"/></svg>
             <span>WhatsApp ile Mesaj Gönder</span>
           </a>
+        </div>
+
+        <!-- Google E-Tablolar Canlı Veritabanı Yapılandırması -->
+        <div class="action-card" style="grid-column: 1 / -1; border: 1px dashed rgba(74, 144, 226, 0.4); background: rgba(15, 23, 42, 0.6);">
+          <h4>⚡ Google E-Tablolar Canlı Veritabanı Entegrasyonu</h4>
+          <p style="font-size: 12.5px; color: var(--text-dim); margin-bottom: 8px;">
+            Katılımcıların tamamladığı anketlerin doğrudan Google E-Tablonuza otomatik düşmesi için Apps Script Web Uygulaması URL'nizi buraya girebilirsiniz:
+          </p>
+          <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+            <input type="text" id="webhookUrlInput" placeholder="https://script.google.com/macros/s/.../exec" style="flex: 1; min-width: 250px; padding: 8px 12px; background: rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.2); border-radius: 6px; color: #fff; font-size: 12px;">
+            <button type="button" class="btn-primary" id="btnSaveWebhook" style="padding: 8px 14px; font-size: 12px;">Kaydet</button>
+            <button type="button" class="btn-secondary" id="btnTestWebhook" style="padding: 8px 14px; font-size: 12px;">Test Gönder</button>
+          </div>
+          <small id="webhookSaveNotice" style="display:block; margin-top:6px; color:var(--accent-teal); font-size:11.5px;"></small>
         </div>
       </div>
 

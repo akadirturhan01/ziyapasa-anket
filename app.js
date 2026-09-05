@@ -3,6 +3,19 @@
  * Saha Uygulaması ve İnteraktif Değerlendirme Motoru
  */
 
+// Google E-Tablolar Canlı Veritabanı Webhook URL
+// 1. URL parametresinden (?webhook=...)
+// 2. localStorage'dan
+// 3. Varsayılan tanımlı URL'den okunur
+const _urlParams = new URLSearchParams(window.location.search);
+if (_urlParams.has('webhook')) {
+  try {
+    localStorage.setItem('tubitak_google_sheets_webhook_url', _urlParams.get('webhook').trim());
+  } catch (e) {}
+}
+
+let GOOGLE_SHEETS_WEBHOOK_URL = localStorage.getItem('tubitak_google_sheets_webhook_url') || "";
+
 // 5 Binanın Veri Kümesi ve Görsel Yolları
 const BUILDINGS_DATA = [
   {
@@ -147,6 +160,7 @@ document.addEventListener('DOMContentLoaded', () => {
   renderQuickDots();
   setupEventListeners();
   updateStorageCount();
+  initGoogleSheetsIntegration();
 });
 
 // Hızlı Adım Noktaları
@@ -449,6 +463,9 @@ function finishSurvey() {
 
   // WhatsApp Paylaşım Linkini Hazırla
   setupWhatsAppLink();
+
+  // Google E-Tablolara Canlı Otomatik Kayıt
+  sendToGoogleSheets(surveyRespondent);
 }
 
 function renderSummaryCard() {
@@ -626,3 +643,136 @@ function resetForNewSurvey() {
   stepIntro.style.display = 'block';
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
+
+// ==========================================================================
+// GOOGLE E-TABLOLAR CANLI MERKEZİ VERİTABANI VE BULUT SENKRONİZASYONU
+// ==========================================================================
+
+function initGoogleSheetsIntegration() {
+  const webhookInput = document.getElementById('webhookUrlInput');
+  const btnSave = document.getElementById('btnSaveWebhook');
+  const btnTest = document.getElementById('btnTestWebhook');
+  const notice = document.getElementById('webhookSaveNotice');
+
+  // Mevcut URL'i kutuya yaz
+  const currentUrl = GOOGLE_SHEETS_WEBHOOK_URL || localStorage.getItem('tubitak_google_sheets_webhook_url') || '';
+  if (webhookInput && currentUrl) {
+    webhookInput.value = currentUrl;
+  }
+
+  // Kaydet Butonu
+  if (btnSave && webhookInput) {
+    btnSave.addEventListener('click', () => {
+      const val = webhookInput.value.trim();
+      if (!val) {
+        localStorage.removeItem('tubitak_google_sheets_webhook_url');
+        GOOGLE_SHEETS_WEBHOOK_URL = '';
+        if (notice) notice.textContent = 'Webhook URL temizlendi.';
+        return;
+      }
+      localStorage.setItem('tubitak_google_sheets_webhook_url', val);
+      GOOGLE_SHEETS_WEBHOOK_URL = val;
+      if (notice) {
+        notice.style.color = '#2ecc71';
+        notice.textContent = '✓ Google E-Tablolar bağlantısı başarıyla kaydedildi!';
+        setTimeout(() => { notice.textContent = ''; }, 4000);
+      }
+    });
+  }
+
+  // Test Butonu
+  if (btnTest && webhookInput) {
+    btnTest.addEventListener('click', async () => {
+      const url = webhookInput.value.trim() || GOOGLE_SHEETS_WEBHOOK_URL;
+      if (!url) {
+        alert('Lütfen önce Apps Script Web Uygulaması URL\'nizi yapıştırın.');
+        return;
+      }
+      btnTest.disabled = true;
+      btnTest.textContent = 'İletiliyor...';
+
+      const testPayload = {
+        timestamp: new Date().toLocaleString('tr-TR'),
+        fullName: 'Test Kullanıcısı (Canlı Bağlantı Kontrolü)',
+        targetGroup: 'Sistem Testi',
+        experienceAge: '26-40',
+        ziyapasaRelation: 'Araştırmacı',
+        gender: 'Belirtmek İstemiyor',
+        ratings: {
+          bina01: { c1: 5, c2: 5, c3: 5, c4: 5, comment: 'Otomatik canlı entegrasyon testi başarılı.' },
+          bina02: { c1: 5, c2: 5, c3: 5, c4: 5, comment: 'Test' },
+          bina03: { c1: 5, c2: 5, c3: 5, c4: 5, comment: 'Test' },
+          bina04: { c1: 5, c2: 5, c3: 5, c4: 5, comment: 'Test' },
+          bina05: { c1: 5, c2: 5, c3: 5, c4: 5, comment: 'Test' }
+        }
+      };
+
+      try {
+        await fetch(url, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify(testPayload)
+        });
+        alert('✅ Test paketi Google E-Tablonuza iletildi! Lütfen tablonuzu açıp yeni satırın gelip gelmediğini kontrol edin.');
+      } catch (err) {
+        alert('⚠️ Test gönderiminde bir hata oluştu: ' + err.message);
+      } finally {
+        btnTest.disabled = false;
+        btnTest.textContent = 'Test Gönder';
+      }
+    });
+  }
+}
+
+async function sendToGoogleSheets(record) {
+  const syncBanner = document.getElementById('cloudSyncStatus');
+  const syncText = document.getElementById('cloudSyncText');
+  if (!syncBanner || !syncText) return;
+
+  const activeWebhook = GOOGLE_SHEETS_WEBHOOK_URL || localStorage.getItem('tubitak_google_sheets_webhook_url');
+
+  syncBanner.style.display = 'flex';
+
+  if (!activeWebhook || !activeWebhook.trim()) {
+    syncBanner.className = 'cloud-sync-banner warning';
+    syncBanner.innerHTML = `
+      <span class="sync-icon">ℹ️</span>
+      <span id="cloudSyncText">Verileriniz bu cihaza kaydedildi. Canlı merkezi tablo kaydı için Google E-Tablolar bağlantısı bekleniyor.</span>
+    `;
+    return;
+  }
+
+  syncBanner.className = 'cloud-sync-banner';
+  syncBanner.innerHTML = `
+    <span class="sync-icon">⏳</span>
+    <span id="cloudSyncText">Yanıtlarınız merkezi Google E-Tablolar veritabanına aktarılıyor...</span>
+  `;
+
+  try {
+    // Google Apps Script Web App'e 'no-cors' ve text/plain ile gönderim:
+    // Bu sayede tarayıcı OPTIONS preflight engeline takılmaz ve doğrudan doPost'a düşer.
+    await fetch(activeWebhook, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: {
+        'Content-Type': 'text/plain;charset=utf-8'
+      },
+      body: JSON.stringify(record)
+    });
+
+    syncBanner.className = 'cloud-sync-banner success';
+    syncBanner.innerHTML = `
+      <span class="sync-icon">✅</span>
+      <span id="cloudSyncText"><strong>Canlı Kayıt Başarılı!</strong> Yanıtınız merkezi Google E-Tablolar tablosuna canlı olarak işlendi.</span>
+    `;
+  } catch (err) {
+    console.warn('Google Sheets gönderim hatası:', err);
+    syncBanner.className = 'cloud-sync-banner warning';
+    syncBanner.innerHTML = `
+      <span class="sync-icon">⚠️</span>
+      <span id="cloudSyncText">Bulut kaydı sırasında geçici bir ağ aksaması oluştu. Verileriniz yerel bellekte güvendedir, CSV indirebilir veya WhatsApp ile iletebilirsiniz.</span>
+    `;
+  }
+}
+
